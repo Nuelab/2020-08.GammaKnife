@@ -1,0 +1,22 @@
+* Cấu hình người dùng
+Thêm người dùng
+ 	git config --global user.email "hungbuitien19081997@gmail.com"
+Thêm tên người dùng
+ 	git config --global user.name "BTHung"
+* Tạo dự án trên máy chủ và Clone
+	git init	
+	git clone https://github.com/Nuelab/2018-2021.CTMachine.git
+* Đẩy ngược lại máy chủ
+	git add PythonCode # Đẩy file
+	git add .          # Đẩy tất cả
+	git commit -m "day len may chu"
+	git branch -M main
+	git remote add origin https://github.com/Nuelab/2018-2021.CTMachine.git
+	git push origin main
+
+*Liệt kê toàn bộ config của git
+	git config --list
+* Hiển thị GIT User
+	git config user.name
+* Hiển thị GIT Email
+	git config user.email

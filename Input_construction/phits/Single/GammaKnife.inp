@@ -1,0 +1,333 @@
+file=GammaKnife.inp	
+$MPI = 40
+[ T i t l e ]
+ Gamma Knife Model with single source
+
+[ P a r a m e t e r s ]
+ icntl    =           0     # (D=0) 3:ECH 5:NOR 6:SRC 7,8:GSH 11:DSH 12:DUMP
+ maxcas   =    10000000     # (D=10) number of particles per one batch
+ maxbch   =         100     # (D=10) number of batches
+c file(1)  = C:/phits/      # (D=c:/phits) PHITS install folder name
+ file(1)  = /mnt/WD1T/PHITS3.2.2/phits/       # (D=c:/phits) PHITS install folder name
+ file(6)  = phits.out       # (D=phits.out) general output file name
+ emin(14) = 1/100           # cut-off energy for photons [MeV]
+ wc1(14)  = 0.1             # minimum weight for photon particles
+ wc2(14)  = 0.05            # cut-off weight for photon particles
+c dumpall  = 1				# write down all information on file as binary data
+ itall    = 1				# output both numerical data and image files
+ imout    = 1				# option for the output format of the [Material] section
+ jmout    = 2				# option for the output format of material density in [Material] section [%]
+ kmout    = 1				# option of nuclear data information
+ icput    = 1               # option for recording and outputting CPU time for each calculation process
+c file(15) = dumpall.dat		# file name for option dumpall  = 1
+ 
+[ S o u r c e ]
+   s-type =   1             # mono-energetic axial source
+     proj =  photon         # kind of incident particle         
+      dir =   -1            # z-direction of beam [cosine]
+	  phi =    0			# Azimuthal angel [degree]
+	   r0 =   0.05          # radius [cm]
+	   x0 =   0.
+	   y0 =   0.
+       z0 =   39.1          # minimum position of z-axis [cm]
+       z1 =   41.1          # maximum position of z-axis [cm]
+   e-type =   8             # descrete energy distribution
+	   ne = 3               # number of energy points
+	   1.1732 99.88/100
+	   1.3325 99.88/100
+	   2.1586 0.120/100
+
+[ M a t e r i a l ]
+ mat[1] 006000 -0.000124
+	    007000 -0.755268
+	    008000 -0.231781
+	    018000 -0.012827	$ Air
+ mat[2] 006000 -0.000260
+        014000 -0.004200
+	    015000 -0.000190
+	    016000 -0.000030
+	    024000 -0.168100
+	    025000 -0.014000
+	    026000 -0.682100
+	    028000 -0.110100
+	    042000 -0.021100	$ Stainless Stell
+ mat[3] 001000 -0.111894
+        008000 -0.888106	$ Water
+ mat[4] 013000 -1.0			$ Aluminium
+ mat[5] 027000 -1.0			$ Cobalt
+ mat[6] 026000 -1.0			$ Iron
+ mat[7] 082000 -1.0			$ Lead
+ mat[8] 074000 -1.0			$ Tungsten
+
+[Mat Name Color]
+ mat	name				color
+ 1		Air					white
+ 2		SS					lightgray
+ 3		Water				blue
+ 4		Aluminium			matblack
+ 5		Cobalt				pastelpink
+ 6		Iron				orange	
+ 7		Lead				pastelblue
+ 8		Tungsten			pastelyellow
+ 
+[ S u r f a c e ]
+ 10 pz 41.1
+ 11 pz 39.1
+ 12 cz 0.05
+ 13 kz 39.07 2.77777778 1
+ 14 cz 0.24
+ 15 cz 0.4
+ 16 pz 41.59
+ 17 pz 38.87
+ 18 pz 39.02
+ 19 trc 0. 0. 39.02 0 0 -0.32 0.4 0.38
+ 20 pz 38.95
+ 21 pz 38.99
+ 22 pz 39.17
+ 23 trc 0 0 39.17 0 0 -0.18 0.24 0.05
+ 24 pz 42
+ 25 pz 40.9
+ 26 pz 40.4
+ 27 pz 40.15
+ 28 pz 38.45
+ 29 cz 1.1
+ 30 cz 0.8
+ 31 cz 1.4
+ 32 cz 1.2
+ 33 cz 0.25
+ 34 pz 38.35
+ 35 pz 31.85
+ 36 cz 0.25
+ 37 trc 0 0 31.85 0 0 -9.25 0.25 0.425
+ 38 so 22.6
+ 39 pz 39.88
+ 40 pz 39.68
+ 41 cz 1.88
+ 42 pz 38.15
+ 43 pz 37.95
+ 44 cz 1.74
+ 45 so 22.5
+ 46 trc 0 0 22.5 0 0 -6 0.205 0.25
+ 47 pz 22.16
+ 48 pz 21.76
+ 49 so 16.5
+ 50 so 8
+ 51 pz 0
+ 52 pz 22.6
+ 53 pz 16.5
+ 54 so 42
+ 99 rpp -50 50 -50 50 -15 50
+
+[ C e l l ]
+ 100 5 -8.900000 (-10 11 -12)
+ 101 1 -1.204E-3 (-11 -12 -13)
+ 102 2 -7.800000 (14 -15 -16 18):(14 17 -18 -19):(-14 20 -21)
+ 103 2 -7.800000 ((-14 -16 22) #100):((21 -22 -23) #100 #101)
+ 104 1 -1.204E-3 (-14 -22 21) #100 #101 #102 #103
+ 105 1 -1.204E-3 (-14 17 -20)
+ 106 1 -1.204E-3 (-17 28 -33)
+ 107 4 -2.700000 ((-24 25 -29):(-25 26 -30):(-26 27 -31):(-27 28 -32))
+     #100 #101 #102 #103 #104 #105 #106
+ 108 1 -1.204E-3 (-34 35 -36)
+ 109 1 -1.204E-3 (-37)
+ 110 8 -19.30000 (-34 35 33 -32)
+ 111 7 -11.35000 (-35 37.1 38 -32)
+ 112 2 -7.800000 ((-27 39 -31 32):(-39 40 -41 32):(-40 28 -31 32))
+ 113 2 -7.800000 ((-34 42 -31 32):(-42 43 -44 32):(-43 38 -31 32) 52)
+ 114 1 -1.204E-3 (-46)
+ 115 8 -19.30000 ((-45 47 -29 46):(-47 48 -32 46):(-48 49 -29 46) 53)
+ 116 3 -1.000000 -50
+ 117 1 -1.204E-3 (-28 34 -31)
+ 996 6 -7.874000 (-45 49 51) #114 #115
+ 997 6 -7.874000 (-54 38 51) #100 #101 #102 #103 #104 #105 #106 #107 
+     #108 #109 #110 #111 #112 #113 #114 #115 #116 #117
+ 998 1 -1.204E-3 -99 #100 #101 #102 #103 #104 #105 #106 #107 #108 #109 
+     #110 #111 #112 #113 #114 #115 #116 #117 #996 #997
+ 999 -1 99
+
+[ Importance ]
+ part = photon
+	reg			imp
+	100			1.0
+	101			1.0
+	102			1.0
+	103			1.0
+	104			1.0
+	105			1.0
+	106			1.0
+	107			1.0
+	108			1.0
+	109			1.0
+	110			1.0
+	111			1.0
+	112			1.0
+	113			1.0
+	114			1.0
+	115			1.0
+	116			2.0
+	117			1.0
+	996			1.0
+	997			1.0
+	998			1.0
+	999			0.0
+
+[ Reg Name ]
+	reg			name		size
+	100			source		0.5
+	101			airgrap		0.5
+	102			capsule		0.5
+	103			capsule		0.5
+	104			airgrap		0.5
+	105			capsule		0.5
+	106			airgrap		0.5
+	107			bushing		0.5
+	108			airgrap		0.5
+	109			airgrap		0.5
+	110			collimator	0.5
+	111			collimator	0.5
+	112			shielding	0.5
+	113			shielding	0.5
+	114			airgrap		0.5
+	115			collimator	0.5
+	116			phantom		0.5
+	117			environment	0.5
+
+[ Multiplier]
+	number = -201
+	interpolation = log
+	part = photon
+	ne = 25
+	0.01	2.78E-06
+	0.015	1.11E-06
+	0.02	5.88E-07
+	0.03	2.56E-07
+	0.04	1.56E-07
+	0.05	1.20E-07
+	0.06	1.11E-07
+	0.08	1.20E-07
+	0.10	1.47E-07
+	0.15	2.38E-07
+	0.20	3.45E-07
+	0.30	5.56E-07
+	0.40	7.69E-07
+	0.50	9.09E-07
+	0.60	1.14E-06
+	0.80	1.47E-06
+	1.0		1.79E-06
+	1.5		2.44E-06
+	2.0		3.03E-06
+	3.0		4.00E-06
+	4.0		4.76E-06
+	5.0		5.56E-06
+	6.0		6.25E-06
+	8.0		7.69E-06
+	10.		9.09E-06
+
+[ T - T r a c k ] off
+    title = Energy distribution spectrum of source cell
+    mesh  = reg
+	  reg = 100
+   e-type =    2            # e-mesh is given by the below data
+       ne =  260            # number of e-mesh points
+	 emin = 0.0
+	 emax = 2.6
+     unit =    1            # unit is [1/cm^2/source]
+     axis =  eng            # axis of output
+     file = EDP_Source.out  # file name of output for the above axis
+     part =  photon      
+    gshow =    1            # 0: no 1:bnd, 2:bnd+mat, 3:bnd+reg 4:bnd+lat
+   epsout =    1            # (D=0) generate eps file by ANGEL
+   
+[ T - T r a c k ] off 
+    title = Energy distribution spectrum in phantom cell
+    mesh  = reg
+	  reg = 116
+   e-type =    2            # e-mesh is given by the below data
+       ne =  260            # number of e-mesh points
+	 emin = 0.0
+	 emax = 2.6
+     unit =    1            # unit is [1/cm^2/source]
+     axis =  eng            # axis of output
+     file = EDP_Phantom.out # file name of output for the above axis
+     part =  photon      
+    gshow =    1            # 0: no 1:bnd, 2:bnd+mat, 3:bnd+reg 4:bnd+lat
+   epsout =    1            # (D=0) generate eps file by ANGEL
+
+[ T - T r a c k ] off
+    title = Energy distribution spectrum in interested region
+    mesh  = xyz
+   x-type =    2            # x-mesh is linear given by xmin, xmax and nx
+     xmin =  -2.00000       # minimum value of x-mesh points
+     xmax =   2.00000       # maximum value of x-mesh points
+       nx =   1             # number of x-mesh points
+   y-type =    2            # y-mesh is given by the below data
+       ny =     1           # number of y-mesh points
+     ymin =   -2.0000       # minimum value of y-mesh points
+	 ymax =    2.0000       # maximum value of x-mesh points
+   z-type =    2            # z-mesh is linear given by zmin, zmax and nz
+     zmin =  -2.00000       # minimum value of z-mesh points
+     zmax =   2.00000       # maximum value of z-mesh points
+       nz =   1             # number of z-mesh points
+   e-type =    2            # e-mesh is given by the below data
+       ne =  260            # number of e-mesh points
+	 emin = 0.0
+	 emax = 2.6
+     unit =    1            # unit is [1/cm^2/source]
+     axis =  eng            # axis of output
+     file = EDP_interested_region.out # file name of output for the above axis
+     part =  photon      
+    gshow =    1            # 0: no 1:bnd, 2:bnd+mat, 3:bnd+reg 4:bnd+lat
+   epsout =    1            # (D=0) generate eps file by ANGEL
+	
+[ T - Deposit ] off
+    title = Energy deposition in xyz mesh
+     mesh =  xyz            # mesh type is xyz scoring mesh
+   x-type =    2            # x-mesh is linear given by xmin, xmax and nx
+     xmin =  -2.00000       # minimum value of x-mesh points
+     xmax =   2.00000       # maximum value of x-mesh points
+       nx =   40            # number of x-mesh points
+   y-type =    2            # y-mesh is given by the below data
+       ny =     40          # number of y-mesh points
+     ymin =   -2.0000       # minimum value of y-mesh points
+	 ymax =    2.0000       # maximum value of x-mesh points
+   z-type =    2            # z-mesh is linear given by zmin, zmax and nz
+     zmin =  -2.00000       # minimum value of z-mesh points
+     zmax =   2.00000       # maximum value of z-mesh points
+       nz =   40            # number of z-mesh points
+     unit =    0            # unit is [MeV/cm^3/source]
+ material =  all            # (D=all) number of specific material
+   output =  dose           # total deposit energy
+     axis =    xy           # axis of output
+     file = deposit.out     # file name of output for the above axis
+     part =  photon      
+    gshow =    1            # 0: no 1:bnd, 2:bnd+mat, 3:bnd+reg 4:bnd+lat
+   epsout =    1            # (D=0) generate eps file by ANGEL
+   vtkout =    1
+   
+[ T - T r a c k ]
+    title = Track Detection in xyz mesh
+     mesh =  xyz            # mesh type is xyz scoring mesh
+   x-type =    2            # x-mesh is linear given by xmin, xmax and nx
+     xmin =  -2.00000       # minimum value of x-mesh points
+     xmax =   2.00000       # maximum value of x-mesh points
+       nx =   80            # number of x-mesh points
+   y-type =    2            # y-mesh is given by the below data
+       ny =     80          # number of y-mesh points
+     ymin =   -2.0000       # minimum value of y-mesh points
+	 ymax =    2.0000       # maximum value of x-mesh points
+   z-type =    2            # z-mesh is linear given by zmin, zmax and nz
+     zmin =  -2.00000       # minimum value of z-mesh points
+     zmax =   2.00000       # maximum value of z-mesh points
+       nz =   80            # number of z-mesh points
+   e-type =    1            # e-mesh is given by the below data
+       ne =    1            # number of e-mesh points
+            0.0  3.0
+     unit =    1            # unit is [1/cm^2/source]
+     axis =   xy            # axis of output
+     file = track_xz.out    # file name of output for the above axis
+     part =  photon      
+    gshow =    1            # 0: no 1:bnd, 2:bnd+mat, 3:bnd+reg 4:bnd+lat
+   epsout =    1            # (D=0) generate eps file by ANGEL
+
+[ E n d ]
+
